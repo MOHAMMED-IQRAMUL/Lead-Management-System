@@ -1,6 +1,6 @@
-import 'dotenv/config'; 
-import app from './app.js';
-import { connectDB } from './src/config/database.config.js';
+import "dotenv/config";
+import app from "./app.js";
+import { connectDB } from "./src/config/database.config.js";
 
 const PORT = process.env.PORT || 4000;
 
@@ -9,23 +9,24 @@ async function start() {
     await connectDB(process.env.MONGO_URI);
     const server = app.listen(PORT, () => {
       // eslint-disable-next-line no-console
-      console.log(`🚀 Server running on port ${PORT} - NODE_ENV=${process.env.NODE_ENV}`);
+      console.log(
+        `🚀 Server running on port ${PORT} - env=${process.env.NODE_ENV}`
+      );
     });
 
-    process.on('unhandledRejection', (err) => {
+    process.on("unhandledRejection", (err) => {
       // eslint-disable-next-line no-console
-      console.error('Unhandled Rejection:', err);
+      console.error("Unhandled Rejection", err);
       server.close(() => process.exit(1));
     });
-
-    process.on('uncaughtException', (err) => {
+    process.on("uncaughtException", (err) => {
       // eslint-disable-next-line no-console
-      console.error('Uncaught Exception:', err);
+      console.error("Uncaught Exception", err);
       server.close(() => process.exit(1));
     });
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.error('Failed to start server:', err);
+    console.error("Failed to start:", err);
     process.exit(1);
   }
 }
