@@ -122,8 +122,8 @@ export async function listLeads(req, res, next) {
     const limit = Math.min(parseInt(req.query.limit || '20', 10) || 20, 100);
     const skip = (page - 1) * limit;
 
-    const baseFilters = buildFiltersFromQuery(req.query);
-    const filters = { ...baseFilters, userId: mongoose.Types.ObjectId(userId) };
+  const baseFilters = buildFiltersFromQuery(req.query);
+  const filters = { ...baseFilters, userId };
     const sort = { created_at: -1 };
 
     const [total, data] = await Promise.all([
