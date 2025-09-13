@@ -25,7 +25,15 @@ export function generateToken(payload = {}, options = {}) {
  */
 export function cookieOptions() {
   const secure = process.env.NODE_ENV === 'production';
-  const sameSite = secure ? 'strict' : 'lax';
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  const forceSameSite = (process.env.COOKIE_SAMESITE || '').toLowerCase();
+
+  // If deploying on different domains, we need SameSite=None + Secure=true for cookies to be sent cross-site
+  const isLocalhost = /^https?:\/\/localhost(?::\d+)?$/i.test(frontendUrl);
+  let sameSite = isLocalhost ? 'lax' : 'none';
+  if (forceSameSite === 'lax' || forceSameSite === 'strict' || forceSameSite === 'none') {
+    sameSite = forceSameSite;
+  }
 
   const parseMaxAgeMs = () => {
     const v = JWT_EXPIRES_IN;
@@ -44,9 +52,9 @@ export function cookieOptions() {
   };
 
   return {
-    httpOnly: true,
-    secure,
-    sameSite,
+  httpOnly: true,
+  secure: sameSite === 'none' ? true : secure,
+  sameSite,
     maxAge: parseMaxAgeMs(),
     path: '/',
   };
