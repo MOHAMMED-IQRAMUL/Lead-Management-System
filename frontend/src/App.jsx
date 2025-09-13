@@ -6,6 +6,7 @@ import LeadsPage from './pages/LeadsPage';
 import LeadFormPage from './pages/LeadFormPage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import NotFoundPage from './pages/NotFoundPage';
 
 function PrivateRoute({ children }) {
   const { user, loading, waking } = useAuth();
@@ -49,7 +50,7 @@ export default function App() {
             <Route path="/leads" element={<PrivateRoute><LeadsPage /></PrivateRoute>} />
             <Route path="/leads/new" element={<PrivateRoute><LeadFormPage mode="create" /></PrivateRoute>} />
             <Route path="/leads/:id/edit" element={<PrivateRoute><LeadFormPage mode="edit" /></PrivateRoute>} />
-            <Route path="*" element={<div>Not Found</div>} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Layout>
       </BrowserRouter>
