@@ -10,7 +10,7 @@ async function runSeed() {
   try {
     await connectDB(process.env.MONGO_URI);
 
-  const email = 'test@erino.io';
+  const email = 'test@email.com';
   const password = 'Test@1234';
   const name = 'Test User';
 

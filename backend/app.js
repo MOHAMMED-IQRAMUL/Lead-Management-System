@@ -29,8 +29,10 @@ const limiter = rateLimit({
 app.use(limiter);
 
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+// In development, allow any origin (helps when Vite picks a different port). In production, restrict to FRONTEND_URL.
+const corsOrigin = process.env.NODE_ENV === 'production' ? FRONTEND_URL : true;
 app.use(cors({
-  origin: FRONTEND_URL,
+  origin: corsOrigin,
   credentials: true,
 }));
 

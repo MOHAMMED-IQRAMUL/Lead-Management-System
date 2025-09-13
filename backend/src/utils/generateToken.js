@@ -25,7 +25,7 @@ export function generateToken(payload = {}, options = {}) {
  */
 export function cookieOptions() {
   const secure = process.env.NODE_ENV === 'production';
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:5173').trim();
   const forceSameSite = (process.env.COOKIE_SAMESITE || '').toLowerCase();
 
   // If deploying on different domains, we need SameSite=None + Secure=true for cookies to be sent cross-site
